@@ -1,0 +1,14 @@
+<Command name="schRTLInfo"  delimiter="."  >
+<RTLBlock >
+<RTLInfo   name="state_0"  type="2"  fileName="../rtl/sm4_wrapper.v"  >
+    <Seg beginLine="186"  endLine="218"  />
+  </RTLInfo>
+ <Instance name="tb_top.u_dut"  />
+</RTLBlock>
+<RTLBlock >
+<RTLInfo   name="current_1"  type="2"  fileName="../rtl/sm4_encdec.v"  >
+    <Seg beginLine="185"  endLine="200"  />
+  </RTLInfo>
+ <Instance name="tb_top.u_dut.u_sm4_top.u_encdec"  />
+</RTLBlock>
+ </Command>

@@ -1,0 +1,50 @@
+# =============================================================================
+#  EDA Tool-generated files — DO NOT commit
+# =============================================================================
+
+# --- VCS Simulation artifacts ---
+simv
+simv.daidir/
+csrc/
+DVEfiles/
+ucli.key
+novas.*
+verdiLog/
+vc_hdrs.h
+stack.info.*
+*.fsdb
+*.vpd
+*.vcd
+*.vdb
+*.vdb.data
+*.log
+*__*__*.so
+
+# --- SpyGlass Lint artifacts ---
+lint/sm4_lint/
+lint/lint.log
+lint/spyglass.out
+
+# --- Design Compiler synthesis artifacts ---
+syn/command.log
+syn/dc_shell.log
+syn/dc_reports.log
+syn/default.svf
+syn/rpt/
+
+# --- Local environment setup (contains credentials) ---
+dycuse-ds.sh
+
+# --- General ---
+*.swp
+*.bak
+*~
+Thumbs.db
+.DS_Store
+
+# =============================================================================
+#  Keep these generated/config files IN version control:
+#    sim/Makefile, sim/cov_hier.cfg
+#    syn/syn.tcl, syn/gen_reports.tcl, syn/sm4.sdc, syn/.synopsys_dc.setup
+#    lint/run_spyglass.tcl, lint/sm4_lint.prj
+# =============================================================================

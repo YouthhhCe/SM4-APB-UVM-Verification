@@ -1,0 +1,13 @@
+# SpyGlass Project File for SM4 RTL Lint
+set_option enableSV yes
+read_file -type verilog ../rtl/sbox_replace.v
+read_file -type verilog ../rtl/transform_for_encdec.v
+read_file -type verilog ../rtl/transform_for_key_exp.v
+read_file -type verilog ../rtl/one_round_for_encdec.v
+read_file -type verilog ../rtl/one_round_for_key_exp.v
+read_file -type verilog ../rtl/get_cki.v
+read_file -type verilog ../rtl/key_expansion.v
+read_file -type verilog ../rtl/sm4_encdec.v
+read_file -type verilog ../rtl/sm4_top.v
+read_file -type verilog ../rtl/sm4_wrapper.v
+set_option top sm4_wrapper

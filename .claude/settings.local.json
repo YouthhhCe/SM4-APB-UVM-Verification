@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/home/yian/sm4_apb_uvm/sim/simv +UVM_TESTNAME=sm4_sanity_test +UVM_VERBOSITY=UVM_MEDIUM -cm line+cond+fsm+tgl+branch -cm_name sm4_sanity_test -l sim_sm4_sanity_test.log)",
+      "Bash(pkill -f \"simv.*sm4_sanity_test\")",
+      "Bash(make clean *)",
+      "Bash(make compile *)",
+      "Bash(timeout 120 make run TESTNAME=sm4_sanity_test)",
+      "Bash(timeout 60 ./simv +UVM_TESTNAME=sm4_sanity_test +UVM_VERBOSITY=UVM_MEDIUM -cm line+cond+fsm+tgl+branch -cm_name sm4_sanity_test -l sim_sm4_sanity_test.log)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(./simv +UVM_TESTNAME=sm4_sanity_test +UVM_VERBOSITY=UVM_LOW -cm line+cond+fsm+tgl+branch -cm_name sm4_sanity_test -l sim_sm4_sanity_test.log)",
+      "Bash(echo \"=== EXIT: $? ===\")",
+      "Bash(killall -9 simv)",
+      "Bash(timeout 20 ./simv +UVM_TESTNAME=sm4_golden_test +UVM_VERBOSITY=UVM_MEDIUM -cm line+cond+fsm+tgl+branch -cm_name sm4_golden -l sim_sm4_golden_test.log)",
+      "Bash(timeout 20 ./simv +UVM_TESTNAME=sm4_golden_test +UVM_VERBOSITY=UVM_MEDIUM -cm line+cond+fsm+tgl+branch -cm_name sm4_golden_v2 -l sim_sm4_golden_v2.log)",
+      "Bash(dc_shell -f syn.tcl -output_log_file dc_shell.log)"
+    ]
+  }
+}

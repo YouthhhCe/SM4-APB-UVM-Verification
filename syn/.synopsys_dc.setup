@@ -1,0 +1,8 @@
+################################################################################
+# .synopsys_dc.setup  —  DC configuration for SM4 synthesis
+################################################################################
+
+set target_library   /home/yian/Synopsys/syn/V-2023.12-SP3/libraries/syn/lsi_10k.db
+set link_library     {* /home/yian/Synopsys/syn/V-2023.12-SP3/libraries/syn/lsi_10k.db}
+set synthetic_library {}
+set symbol_library   {}
