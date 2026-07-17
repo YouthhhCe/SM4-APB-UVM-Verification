@@ -36,7 +36,8 @@ syn/dc_reports.log
 syn/default.svf
 syn/rpt/
 
-# --- Local environment setup (contains credentials) ---
+# --- Local environment setup ---
+.claude/
 dycuse-ds.sh
 
 # --- General ---
