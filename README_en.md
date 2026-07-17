@@ -14,18 +14,42 @@ make run TESTNAME=sm4_random_test     # Random test (1000 blocks)
 make cov                              # Generate coverage report
 ```
 
-## Directory
+## Directory Structure
 
-| Dir | Description |
-|-----|-------------|
-| `rtl/` | RTL source (10 Verilog files) |
-| `uvm/` | UVM 1.2 verification environment |
-| `tb/` | Testbench top + interfaces |
-| `c_model/` | C reference model (DPI-C) |
-| `sim/` | VCS simulation Makefile |
-| `syn/` | Design Compiler synthesis scripts |
-| `lint/` | SpyGlass lint scripts |
-| `doc/` | Specification, verification strategy & report |
+```
+├── rtl/                     # RTL source (10 .v files)
+│   ├── sm4_wrapper.v        #   Top-level wrapper (APB + Stream)
+│   ├── sm4_top.v            #   Core top
+│   ├── sm4_encdec.v         #   Encryption/decryption control
+│   ├── key_expansion.v      #   Key expansion
+│   └── ...                  #   S-box, transforms, round functions
+├── c_model/                 # C reference model + DPI-C (4 files)
+├── uvm/                     # UVM 1.2 verification environment
+│   ├── env/                 #   agent / driver / monitor / scoreboard / coverage
+│   ├── seq/                 #   sequences
+│   └── test/                #   6 test cases
+├── tb/                      # Testbench top + interfaces (tb_top / apb_if / stream_if)
+├── sim/                     # Simulation
+│   ├── Makefile             #   VCS compile/run/coverage
+│   ├── vcs_compile.log      #   Compilation log
+│   ├── sim_sm4_*_test.log   #   6 test run logs
+│   ├── sm4_tb.fsdb          #   Waveform (Verdi)
+│   └── coverage_report/     #   Code coverage report (URG, HTML)
+├── syn/                     # Synthesis
+│   ├── syn.tcl              #   DC synthesis script
+│   ├── sm4.sdc              #   Timing constraints
+│   ├── dc_shell.log         #   Synthesis log
+│   └── rpt/                 #   Reports: timing / area / power / resource
+├── lint/                    # Lint
+│   ├── run_spyglass.tcl     #   SpyGlass script
+│   └── lint.log             #   Lint log
+└── doc/                     # Documentation
+    ├── SM4_Spec_and_Arch_zh.md             # Specification & Architecture (CN)
+    ├── SM4_Verification_Strategy_zh.md     # Verification Strategy (CN)
+    ├── SM4_Verification_Report_zh.md       # Verification Report (CN)
+    ├── SM4_Verification_Strategy.md        # Verification Strategy (EN)
+    └── SM4_Verification_Report.md          # Verification Report (EN)
+```
 
 ## Verification Results
 

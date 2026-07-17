@@ -14,18 +14,42 @@ make run TESTNAME=sm4_random_test     # 随机测试 (1000 块)
 make cov                              # 生成覆盖率报告
 ```
 
-## 目录
+## 目录结构
 
-| 目录 | 说明 |
-|------|------|
-| `rtl/` | RTL 源码 (10 个 Verilog 文件) |
-| `uvm/` | UVM 1.2 验证环境 |
-| `tb/` | Testbench 顶层 + 接口 |
-| `c_model/` | C 参考模型 (DPI-C) |
-| `sim/` | VCS 仿真脚本 |
-| `syn/` | Design Compiler 综合脚本 |
-| `lint/` | SpyGlass Lint 脚本 |
-| `doc/` | 规格、验证策略、验证报告 |
+```
+├── rtl/                     # RTL 源码 (10 个 .v)
+│   ├── sm4_wrapper.v        #   顶层封装 (APB + Stream Wrapper)
+│   ├── sm4_top.v            #   内核顶层
+│   ├── sm4_encdec.v         #   加解密控制
+│   ├── key_expansion.v      #   密钥扩展
+│   └── ...                  #   S盒、变换、轮函数等子模块
+├── c_model/                 # C 参考模型 + DPI-C (4 文件)
+├── uvm/                     # UVM 1.2 验证环境
+│   ├── env/                 #   agent / driver / monitor / scoreboard / coverage
+│   ├── seq/                 #   sequence
+│   └── test/                #   6 个测试用例
+├── tb/                      # Testbench 顶层 + 接口 (tb_top / apb_if / stream_if)
+├── sim/                     # 仿真目录
+│   ├── Makefile             #   VCS 编译/运行/覆盖率脚本
+│   ├── vcs_compile.log      #   仿真编译日志
+│   ├── sim_sm4_*_test.log   #   6 个用例运行日志
+│   ├── sm4_tb.fsdb          #   波形文件 (Verdi)
+│   └── coverage_report/     #   代码覆盖率报告 (URG, HTML)
+├── syn/                     # 综合目录
+│   ├── syn.tcl              #   DC 综合脚本
+│   ├── sm4.sdc              #   时序约束
+│   ├── dc_shell.log         #   综合日志
+│   └── rpt/                 #   报告: timing / area / power / resource
+├── lint/                    # Lint 目录
+│   ├── run_spyglass.tcl     #   Spyglass 脚本
+│   └── lint.log             #   Lint 日志
+└── doc/                     # 文档
+    ├── SM4_Spec_and_Arch_zh.md             # 规格与架构 (中文)
+    ├── SM4_Verification_Strategy_zh.md     # 验证策略 (中文)
+    ├── SM4_Verification_Report_zh.md       # 验证报告 (中文)
+    ├── SM4_Verification_Strategy.md        # 验证策略 (英文)
+    └── SM4_Verification_Report.md          # 验证报告 (英文)
+```
 
 ## 验证结果
 
