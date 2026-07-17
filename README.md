@@ -1,73 +1,53 @@
-# SM4 加解密模块 — UVM 验证项目
+# SM4 Encryption Module — UVM Verification Project
 
-SM4 分组密码 IP（GB/T 32907-2016），128-bit 分组 / 128-bit 密钥，32 轮非平衡 Feistel 网络。APB 从接口配置 + 128-bit Valid/Ready 流式数据接口。
+[中文](README_zh.md)
 
-## 目录结构
+SM4 block cipher IP (GB/T 32907-2016), 128-bit block / 128-bit key, 32-round unbalanced Feistel network. APB slave interface + 128-bit Valid/Ready streaming data interface.
 
-```
-├── rtl/                     # RTL 源码 (10 个 .v)
-│   ├── sm4_wrapper.v        #   顶层封装 (APB + Stream Wrapper)
-│   ├── sm4_top.v            #   内核顶层
-│   ├── sm4_encdec.v         #   加解密控制
-│   ├── key_expansion.v      #   密钥扩展
-│   └── ...                  #   S盒、变换、轮函数等子模块
-├── c_model/                 # C 参考模型 + DPI-C (4 文件)
-├── uvm/                     # UVM 1.2 验证环境
-│   ├── env/                 #   agent / driver / monitor / scoreboard / coverage
-│   ├── seq/                 #   sequence
-│   └── test/                #   6 个测试用例
-├── tb/                      # Testbench 顶层 + 接口 (tb_top / apb_if / stream_if)
-├── sim/                     # 仿真目录
-│   ├── Makefile             #   VCS 编译/运行/覆盖率脚本
-│   ├── vcs_compile.log      #   仿真编译日志
-│   ├── sim_sm4_*_test.log   #   6 个用例运行日志
-│   ├── sm4_tb.fsdb          #   波形文件 (Verdi)
-│   └── coverage_report/     #   代码覆盖率报告 (URG, HTML)
-├── syn/                     # 综合目录
-│   ├── syn.tcl              #   DC 综合脚本
-│   ├── sm4.sdc              #   时序约束
-│   ├── dc_shell.log         #   综合日志
-│   └── rpt/                 #   报告: timing / area / power / resource
-├── lint/                    # Lint 目录
-│   ├── run_spyglass.tcl     #   Spyglass 脚本
-│   └── lint.log             #   Lint 日志
-└── doc/                     # 文档
-    ├── SM4_Spec_and_Arch_zh.md          # 规格与架构
-    ├── SM4_Verification_Strategy_zh.md  # 验证策略与方案
-    └── SM4_Verification_Report_zh.md    # 验证报告 (含覆盖率分析)
-```
-
-## 快速开始
+## Quick Start
 
 ```bash
 cd sim
-make compile                          # VCS 编译
-make run TESTNAME=sm4_sanity_test     # 运行单个测试
-make run TESTNAME=sm4_random_test     # 随机测试 (1000 块)
-make cov                              # 生成覆盖率报告
+make compile                          # VCS compilation
+make run TESTNAME=sm4_sanity_test     # Run a single test
+make run TESTNAME=sm4_random_test     # Random test (1000 blocks)
+make cov                              # Generate coverage report
 ```
 
-## 验证结果摘要
+## Directory
 
-| 指标 | 结果 |
-|------|------|
-| 测试用例 | 6/6 全部通过 |
+| Dir | Description |
+|-----|-------------|
+| `rtl/` | RTL source (10 Verilog files) |
+| `uvm/` | UVM 1.2 verification environment |
+| `tb/` | Testbench top + interfaces |
+| `c_model/` | C reference model (DPI-C) |
+| `sim/` | VCS simulation Makefile |
+| `syn/` | Design Compiler synthesis scripts |
+| `lint/` | SpyGlass lint scripts |
+| `doc/` | Specification, verification strategy & report |
+
+## Verification Results
+
+| Metric | Result |
+|--------|--------|
+| Test Cases | 6/6 all passed |
 | Code Coverage | **93.48%** |
-| Functional Coverage | 关键 Covergroup 100% |
-| 数据比对 | 153+ 笔与 C 模型逐位一致 |
+| Functional Coverage | Key covergroups 100% |
+| Data Comparison | 153+ blocks verified against C model |
 
-详见 `doc/SM4_Verification_Report_zh.md`。
+See `doc/SM4_Verification_Report_zh.md` for details.
 
-## 参考与致谢
+## References
 
-- RTL 设计参考：[gongxunwu/sm4-verilog](https://github.com/gongxunwu/sm4-verilog.git)
-- C 参考模型参考：[jeremybennett/sm4](https://github.com/jeremybennett/sm4.git)
+- RTL design adapted from: [gongxunwu/sm4-verilog](https://github.com/gongxunwu/sm4-verilog.git)
+- C reference model adapted from: [jeremybennett/sm4](https://github.com/jeremybennett/sm4.git)
 
-## 工具链
+## Toolchain
 
-| 工具 | 版本 | 用途 |
-|------|------|------|
-| Synopsys VCS | V-2023.12-SP2 | 仿真编译 |
-| Verdi | — | 波形查看 |
-| Design Compiler | — | 逻辑综合 |
-| Spyglass | — | Lint 检查 |
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Synopsys VCS | V-2023.12-SP2 | Simulation |
+| Verdi | — | Waveform viewer |
+| Design Compiler | — | Logic synthesis |
+| Spyglass | — | Lint checking |
