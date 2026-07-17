@@ -80,7 +80,6 @@ run: $(SIMV)
 		+UVM_VERBOSITY=UVM_MEDIUM       \
 		-cm $(COV_TYPES)                \
 		-cm_name $(TESTNAME)            \
-		-cm_hier cov_hier.cfg           \
 		-l $(SIM_LOG)
 	@echo ""
 	@echo "============================================"

@@ -105,13 +105,15 @@ class sm4_coverage extends uvm_component;
     // run_phase  —  cycle-level stream observation
     //=======================================================================
     task run_phase(uvm_phase phase);
+        int idle_cycles;  // consecutive idle cycles since last transfer
         if (stream_vif == null) begin
             `uvm_info("COV", "No stream VIF — skipping stream coverage sampling", UVM_MEDIUM)
             return;
         end
 
         `uvm_info("COV", "Starting stream coverage sampling ...", UVM_MEDIUM)
-        burst_len = 0;
+        burst_len   = 0;
+        idle_cycles = 0;
         forever begin
             @(stream_vif.mon_cb);
 
@@ -124,14 +126,21 @@ class sm4_coverage extends uvm_component;
                 end
             end
 
-            //---- Burst-length detection ----
+            //---- Burst-length detection (timeout-based) ----
+            // Count consecutive transfers (not cycles).  A "burst" is a
+            // series of transfers where the gap between successive
+            // handshakes is ≤ 200 clock cycles.  Longer gaps end the burst.
             if (stream_vif.mon_cb.valid && stream_vif.mon_cb.ready) begin
                 burst_len++;
+                idle_cycles = 0;
             end else begin
-                if (burst_len > 0) begin
-                    `uvm_info("COV", $sformatf("Burst ended: length=%0d", burst_len), UVM_HIGH)
+                idle_cycles++;
+                // End burst only after a long idle gap (>200 cycles)
+                if (idle_cycles > 200 && burst_len > 0) begin
+                    `uvm_info("COV", $sformatf("Burst ended: length=%0d (idle=%0d)", burst_len, idle_cycles), UVM_HIGH)
                     burst_cg.sample();
-                    burst_len = 0;
+                    burst_len   = 0;
+                    idle_cycles = 0;
                 end
             end
         end

@@ -16,6 +16,9 @@ class sm4_apb_base_seq extends uvm_sequence #(apb_item);
     //---- Configuration (set by virtual sequence before start()) ---------------
     bit [127:0] key    = 128'h01234567_89ABCDEF_FEDCBA98_76543210;
     bit         encdec = 1'b0;       // 0=encrypt, 1=decrypt
+    bit         skip_full_config = 0; // if 1, body does nothing
+    bit         csr_write_mode   = 0; // if 1, body calls write_ctrl with params below
+    bit         csr_sm4_en, csr_encdec_en, csr_encdec_sel; // params for csr mode
 
     //---- Constructor ---------------------------------------------------------
     function new(string name = "sm4_apb_base_seq");
@@ -24,9 +27,15 @@ class sm4_apb_base_seq extends uvm_sequence #(apb_item);
 
     //---- body  —  called when started on apb_sequencer -----------------------
     task body();
-        `uvm_info("APB_SEQ", $sformatf(
-            "Starting APB config: key=0x%0h  mode=%0s", key, encdec ? "DEC" : "ENC"), UVM_LOW)
-        config_and_start(key, encdec);
+        if (csr_write_mode) begin
+            write_ctrl(csr_sm4_en, csr_encdec_en, csr_encdec_sel);
+        end else if (skip_full_config) begin
+            `uvm_info("APB_SEQ", "Body skipped (manual control mode)", UVM_HIGH)
+        end else begin
+            `uvm_info("APB_SEQ", $sformatf(
+                "Starting APB config: key=0x%0h  mode=%0s", key, encdec ? "DEC" : "ENC"), UVM_LOW)
+            config_and_start(key, encdec);
+        end
     endtask
 
     //=======================================================================
@@ -122,6 +131,21 @@ class sm4_apb_base_seq extends uvm_sequence #(apb_item);
             finish_item(item);
         end
 
+    endtask
+
+    //=======================================================================
+    // write_ctrl  —  single CTRL register write (for mid-test control)
+    //=======================================================================
+    task write_ctrl(bit sm4_en, bit encdec_en, bit encdec_sel);
+        apb_item item;
+        item = apb_item::type_id::create("item");
+        start_item(item);
+        item.paddr  = 8'h00;
+        item.pwrite = 1'b1;
+        item.pwdata = {29'b0, encdec_sel, encdec_en, sm4_en};
+        finish_item(item);
+        `uvm_info("APB_SEQ", $sformatf(
+            "CTRL write: sm4_en=%0b encdec_en=%0b sel=%0b", sm4_en, encdec_en, encdec_sel), UVM_MEDIUM)
     endtask
 
 endclass : sm4_apb_base_seq

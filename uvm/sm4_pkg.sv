@@ -79,5 +79,7 @@ package sm4_pkg;
     `include "test/sm4_burst_test.sv"
     `include "test/sm4_random_test.sv"
     `include "test/sm4_golden_test.sv"
+    `include "test/sm4_key_rotation_test.sv"
+    `include "test/sm4_hard_reset_test.sv"
 
 endpackage : sm4_pkg
