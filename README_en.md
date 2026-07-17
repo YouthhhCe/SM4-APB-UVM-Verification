@@ -62,12 +62,11 @@ make cov                              # Generate coverage report
 
 See `doc/SM4_Verification_Report_zh.md` for details.
 
-> Built with [Claude Code](https://claude.ai/code).
-
 ## References
 
 - RTL design adapted from: [gongxunwu/sm4-verilog](https://github.com/gongxunwu/sm4-verilog.git)
 - C reference model adapted from: [jeremybennett/sm4](https://github.com/jeremybennett/sm4.git)
+- Built with [Claude Code](https://claude.ai/code)
 
 ## Toolchain
 
