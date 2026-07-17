@@ -2,6 +2,9 @@
 #  EDA Tool-generated files — DO NOT commit
 # =============================================================================
 
+# --- Generated archives ---
+*.zip
+
 # --- VCS Simulation artifacts ---
 simv
 simv.daidir/
@@ -10,6 +13,7 @@ DVEfiles/
 ucli.key
 novas.*
 verdiLog/
+coverage_report/
 vc_hdrs.h
 stack.info.*
 *.fsdb
