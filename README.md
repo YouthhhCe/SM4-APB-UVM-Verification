@@ -38,6 +38,8 @@ make cov                              # 生成覆盖率报告
 
 详见 `doc/SM4_Verification_Report_zh.md`。
 
+> 本项目基于 [Claude Code](https://claude.ai/code) 辅助完成。
+
 ## 参考与致谢
 
 - RTL 设计参考：[gongxunwu/sm4-verilog](https://github.com/gongxunwu/sm4-verilog.git)
